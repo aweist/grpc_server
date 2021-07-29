@@ -1,0 +1,33 @@
+syntax = "proto3";
+package blog;
+
+option go_package = "github.com/aweist/grpc/blog";
+
+service BlogService {
+    rpc SearchBlog(BlogSearch) returns (BlogSearchResults) {}
+    rpc GetPost (BlogPostById) returns (BlogPost);
+}
+
+message BlogPost {
+    string title = 1;
+    string body = 2;
+    int32 id = 3;
+    enum Type {
+        TEXT = 0;
+        PICTURE = 1;
+        VIDEO = 2;
+    }
+    Type type = 4;
+}
+
+message BlogSearch {
+    string query = 1;
+}
+
+message BlogSearchResults {
+    repeated BlogPost blogposts = 1;
+}
+
+message BlogPostById {
+    int32 id = 1;
+}
